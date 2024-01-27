@@ -4,8 +4,20 @@ const express = require("express");
 const httpCreateError = require("http-errors");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+// Routers
+const indexRouter = require("./routes");
+const productRouter = require("./routes/product");
+const categoryRouter = require("./routes/category");
 
-// Routes
+// Connect to MongoDB
+async function mongoConnect() {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+  } catch (err) {
+    console.error(err);
+  }
+}
+mongoConnect();
 
 // App
 const app = express();
@@ -25,9 +37,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static("./public"));
 
 // Routes
-app.use("/", (req, res) => {
-  res.render("layout", { text: "This is some random text" });
-});
+app.use("/", indexRouter);
+app.use("/product", productRouter);
+app.use("/category", categoryRouter);
 
 // Error-handling
 app.use(function (req, res, next) {
