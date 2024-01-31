@@ -10,3 +10,7 @@ block content
           span #{product.price} / #{product.volume}
   else
     p No products in this category
+  span.docControls
+    a(href=category.editUrl) Edit
+    |  | 
+    a(href=category.deleteUrl) Delete

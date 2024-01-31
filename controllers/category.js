@@ -3,6 +3,10 @@ const Category = require("../models/category");
 const Product = require("../models/product");
 const { body, validationResult, matchedData } = require("express-validator");
 
+const formValidations = [
+  body("name", "Name is required").trim().isLength({ min: 1 }).escape(),
+];
+
 exports.readGET = asyncHandler(async (req, res, next) => {
   const [category, products] = await Promise.all([
     Category.findById(req.params.id).exec(),
@@ -25,7 +29,7 @@ exports.createGET = asyncHandler((req, res, next) => {
 });
 
 exports.createPOST = [
-  body("name", "Name is required").trim().isLength({ min: 1 }).escape(),
+  ...formValidations,
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
     const data = matchedData(req);
@@ -43,10 +47,30 @@ exports.createPOST = [
   }),
 ];
 
-exports.updateGET = (req, res, next) => {
-  res.send("This is the update page!");
-};
+exports.updateGET = asyncHandler(async (req, res, next) => {
+  const category = await Category.findById(req.params.id).exec();
+  if (!category) {
+    throw new Error("Category doesn't exist");
+  }
+  res.render("categoryForm", category);
+});
 
-exports.updatePOST = (req, res, next) => {
-  res.send("This is the update post!");
-};
+exports.updatePOST = [
+  ...formValidations,
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+    const data = matchedData(req);
+
+    const categObj = { name: data.name };
+
+    if (!errors.isEmpty()) {
+      res.render("categoryForm", { ...categObj, errors: errors.array() });
+      return;
+    }
+
+    const doc = await Category.findById(req.params.id).exec();
+    doc.name = categObj.name;
+    await doc.save();
+    res.redirect(doc.url);
+  }),
+];
