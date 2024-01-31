@@ -33,7 +33,7 @@ const productFieldNames = [
   "description",
   "ingredients",
   "price",
-  "quantity",
+  "volume",
   "amountInStock",
   "categories",
 ];
@@ -50,7 +50,7 @@ const products = [
   [
     "Apple",
     "Crisp and juicy apple",
-    "Apple",
+    null,
     1.99,
     "500g",
     10,
@@ -59,7 +59,7 @@ const products = [
   [
     "Banana",
     "Ripe and potassium-rich banana",
-    "Banana",
+    null,
     0.79,
     "per piece",
     20,
@@ -68,7 +68,7 @@ const products = [
   [
     "Grapes",
     "Sweet and seedless grapes",
-    "Grapes",
+    null,
     3.49,
     "1lb",
     15,
@@ -77,7 +77,7 @@ const products = [
   [
     "Strawberries",
     "Fresh and succulent strawberries",
-    "Strawberries",
+    null,
     4.99,
     "250g",
     8,
@@ -86,7 +86,7 @@ const products = [
   [
     "Mango",
     "Tropical and juicy mango",
-    "Mango",
+    null,
     2.99,
     "each",
     12,
@@ -95,7 +95,7 @@ const products = [
   [
     "Pineapple",
     "Sweet and tangy pineapple",
-    "Pineapple",
+    null,
     3.99,
     "whole",
     10,
@@ -104,7 +104,7 @@ const products = [
   [
     "Chocolate Cake",
     "Rich and indulgent chocolate cake",
-    "Chocolate, Flour, Sugar, Eggs",
+    ["Chocolate", "Flour", "Sugar", "Eggs"],
     12.99,
     "1kg",
     5,
@@ -113,7 +113,7 @@ const products = [
   [
     "Vanilla Ice Cream",
     "Creamy vanilla-flavored ice cream",
-    "Milk, Cream, Sugar, Vanilla",
+    ["Milk", "Cream", "Sugar", "Vanilla"],
     5.49,
     "500ml",
     8,
@@ -122,7 +122,7 @@ const products = [
   [
     "Cheesecake",
     "Classic creamy cheesecake",
-    "Cream Cheese, Graham Cracker Crust",
+    ["Cream Cheese", "Graham Cracker Crust"],
     18.99,
     "800g",
     6,
@@ -131,7 +131,7 @@ const products = [
   [
     "Fruit Tart",
     "Colorful and fruity tart",
-    "Pastry, Custard, Mixed Fruits",
+    ["Pastry", "Custard", "Mixed Fruits"],
     8.49,
     "300g",
     10,
@@ -140,7 +140,7 @@ const products = [
   [
     "Orange Juice",
     "Freshly squeezed orange juice",
-    "Oranges",
+    ["Oranges"],
     2.99,
     "1L",
     12,
@@ -149,7 +149,7 @@ const products = [
   [
     "Green Tea",
     "Refreshing green tea",
-    "Green Tea Leaves",
+    ["Green Tea Leaves"],
     4.49,
     "200g",
     15,
@@ -158,7 +158,7 @@ const products = [
   [
     "Iced Coffee",
     "Chilled and smooth iced coffee",
-    "Coffee, Milk, Sugar",
+    ["Coffee", "Milk", "Sugar"],
     3.99,
     "500ml",
     10,
@@ -167,7 +167,7 @@ const products = [
   [
     "Tomato Sauce",
     "Classic tomato sauce",
-    "Tomatoes, Garlic, Onion",
+    ["Tomatoes", "Garlic", "Onion"],
     1.79,
     "500g",
     18,
@@ -176,7 +176,7 @@ const products = [
   [
     "BBQ Sauce",
     "Smoky and tangy BBQ sauce",
-    "Tomato, Molasses, Vinegar",
+    ["Tomato", "Molasses", "Vinegar"],
     3.29,
     "250ml",
     10,
@@ -185,7 +185,7 @@ const products = [
   [
     "Pesto Sauce",
     "Basil and pine nut pesto sauce",
-    "Basil, Pine Nuts, Parmesan",
+    ["Basil", "Pine Nuts", "Parmesan"],
     5.99,
     "200g",
     12,
@@ -194,7 +194,7 @@ const products = [
   [
     "Chocolate Chip Cookies",
     "Homemade chocolate chip cookies",
-    "Flour, Chocolate Chips, Butter",
+    ["Flour", "Chocolate Chips", "Butter"],
     4.99,
     "300g",
     15,
@@ -203,7 +203,7 @@ const products = [
   [
     "Cheese Crackers",
     "Crunchy and cheesy crackers",
-    "Flour, Cheese, Butter",
+    ["Flour", "Cheese", "Butter"],
     2.49,
     "150g",
     18,
@@ -212,7 +212,7 @@ const products = [
   [
     "Mixed Nuts",
     "Roasted and salted mixed nuts",
-    "Almonds, Cashews, Peanuts",
+    ["Almonds", "Cashews", "Peanuts"],
     6.99,
     "300g",
     10,
@@ -221,7 +221,7 @@ const products = [
   [
     "Chips",
     "Crispy potato chips",
-    "Potatoes, Salt, Vegetable Oil",
+    ["Potatoes", "Salt", "Vegetable Oil"],
     1.49,
     "200g",
     25,
