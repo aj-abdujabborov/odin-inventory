@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h2= name
+  span #{price} USD / #{volume}
+    if (amountInStock < 5)
+      |  Only #{amountInStock} left in stock
+  p= description
+  h3 Ingredients
+  if (ingredients.length)
+    ul
+      each ingr in ingredients
+        li= ingr
+  else 
+    p No ingredients specified
+  h3 Categories
+  if (categories.length)
+    ul
+      each cat in categories
+        li
+          a(href=cat.url)= cat.name

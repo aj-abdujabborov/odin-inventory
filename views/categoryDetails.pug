@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1= category.name
+  if (products.length)
+    ul
+      each product in products
+        li
+          h2= product.name
+          span #{product.price} / #{product.volume}
