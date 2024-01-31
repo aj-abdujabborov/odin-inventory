@@ -4,6 +4,8 @@ const express = require("express");
 const httpCreateError = require("http-errors");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+// Models
+const categoryModel = require("./models/category");
 // Routers
 const indexRouter = require("./routes");
 const productRouter = require("./routes/product");
@@ -35,6 +37,32 @@ app.use(express.urlencoded({ extended: false }));
 
 // Supply static files
 app.use(express.static("./public"));
+
+// Pass data to layout
+const cachedCategories = (function cachedCategories() {
+  let categories;
+  let firstCallMade = false;
+
+  async function downloadCategories() {
+    categories = await categoryModel.find().exec();
+  }
+
+  async function getCategories() {
+    if (!firstCallMade) {
+      await downloadCategories();
+      setInterval(downloadCategories, 10000);
+      firstCallMade = true;
+    }
+    return categories;
+  }
+
+  return getCategories;
+})();
+
+app.use(async (req, res, next) => {
+  app.locals.loCategories = await cachedCategories();
+  next();
+});
 
 // Routes
 app.use("/", indexRouter);
