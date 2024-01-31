@@ -1,0 +1,15 @@
+extends layout 
+
+block content
+  h1 Create category
+  form(method="POST")
+    ul
+      li
+        label(for="name") Name
+        input(type="text" id="name" name="name" value=name || "")
+    button(type="submit") Submit
+  div.errors
+    if (errors && errors.length)
+      ul
+        each error in errors
+          li= error.msg

@@ -54,3 +54,39 @@ nav a:hover {
 }
 
 /* Main */
+
+/* Forms */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+form ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+form ul li {
+  display: flex;
+}
+
+form input,
+form label {
+  flex: 1 1 0;
+}
+
+/* Errors */
+.errors {
+  margin: 1rem 0;
+}
+.errors ul {
+  padding-left: 1rem;
+  margin: 0;
+}
+.errors li {
+  background: rgb(143, 12, 12);
+  border-radius: 0.1rem;
+  padding: 0.2rem;
+}

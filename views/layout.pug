@@ -12,9 +12,9 @@ html(lang="en")
           li
             a(href=cat.url)= cat.name
         li
-          a(href="/category/create") Add new
+          a(href=loCategoryCreateUrl) Add new
       ul #[span.section Products]
         li
-          a(href="/product/create") Add new
+          a(href=loProductCreateUrl) Add new
     main
       block content

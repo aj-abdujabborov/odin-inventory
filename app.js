@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 // Models
 const categoryModel = require("./models/category");
+const productModel = require("./models/product");
 // Routers
 const indexRouter = require("./routes");
 const productRouter = require("./routes/product");
@@ -61,6 +62,8 @@ const cachedCategories = (function cachedCategories() {
 
 app.use(async (req, res, next) => {
   app.locals.loCategories = await cachedCategories();
+  app.locals.loProductCreateUrl = productModel.getCreateUrl();
+  app.locals.loCategoryCreateUrl = categoryModel.getCreateUrl();
   next();
 });
 
