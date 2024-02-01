@@ -45,7 +45,7 @@ const cachedCategories = (function cachedCategories() {
   let firstCallMade = false;
 
   async function downloadCategories() {
-    categories = await categoryModel.find().exec();
+    categories = await categoryModel.find().sort({ name: 1 }).exec();
   }
 
   async function getCategories() {
