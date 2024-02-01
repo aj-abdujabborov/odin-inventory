@@ -4,6 +4,9 @@ const express = require("express");
 const httpCreateError = require("http-errors");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const compression = require("compression"); // compress responses so that user downloads them faster
+const helmet = require("helmet"); // protection against security vulnerabilities
+const RateLimit = require("express-rate-limit"); // protection against repeated requests
 // Models
 const categoryModel = require("./models/category");
 const productModel = require("./models/product");
@@ -24,6 +27,18 @@ mongoConnect();
 
 // App
 const app = express();
+
+// Security & compression
+const middlewareChain = [
+  RateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 40,
+  }), // need to design page for when limit is exceeded
+  helmet.contentSecurityPolicy(),
+  compression(),
+];
+
+app.use(middlewareChain);
 
 // Views
 app.set("views", path.join(__dirname, "views"));
