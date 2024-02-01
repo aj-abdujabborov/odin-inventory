@@ -33,6 +33,9 @@ block content
               else
                 input(type="checkbox", name="category" id=category.name value=category._id)
               label(for=category.name)= category.name
+      li
+        label(for="password") Admin password
+        input#password(type="password", name="password")
     button(type="submit") Submit
   div.errors
     if (errors && errors.length)

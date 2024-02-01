@@ -7,6 +7,9 @@ block content
       li
         label(for="name") Name
         input(type="text" id="name" name="name" value=name || "")
+      li
+        label(for="password") Admin password
+        input#password(type="password", name="password")
     button(type="submit") Submit
   div.errors
     if (errors && errors.length)

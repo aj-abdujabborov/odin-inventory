@@ -34,6 +34,9 @@ const validationsArray = [
   }),
   body("category").forceIntoArray(),
   body("category.*").escape(),
+  body("password", "Password is incorrect")
+    .equals(process.env.ADMIN_PASSWORD)
+    .escape(),
 ];
 
 module.exports = { body, validationResult, matchedData, validationsArray };

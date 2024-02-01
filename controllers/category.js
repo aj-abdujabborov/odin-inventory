@@ -6,6 +6,9 @@ const mongoose = require("mongoose");
 
 const formValidations = [
   body("name", "Name is required").trim().isLength({ min: 1 }).escape(),
+  body("password", "Password is incorrect")
+    .equals(process.env.ADMIN_PASSWORD)
+    .escape(),
 ];
 
 exports.readAllGET = asyncHandler(async (req, res, next) => {
