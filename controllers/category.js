@@ -30,11 +30,11 @@ exports.readGET = asyncHandler(async (req, res, next) => {
 });
 
 exports.deleteGET = asyncHandler(async (req, res, next) => {
-  const [category, products] = await Promise.all([
+  const [category, productsCount] = await Promise.all([
     Category.findById(req.params.id).exec(),
-    Product.find({ categories: req.params.id }).exec(),
+    Product.find({ categories: req.params.id }).countDocuments().exec(),
   ]);
-  res.render("categoryDelete", { category, products });
+  res.render("categoryDelete", { category, productsCount });
 });
 
 exports.deletePOST = asyncHandler(async (req, res, next) => {

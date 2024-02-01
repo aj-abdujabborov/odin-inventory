@@ -2,8 +2,8 @@ extends layout
 
 block content
   p Are you sure you want to delete the category '#{category.name}'?
-    if (products.length)
-      |  Doing so will remove this category from #{products.length} products.
+    if (productsCount)
+      |  Doing so will remove this category from #{productsCount} products.
   form(method="POST")
     button(type="submit") Delete
     button(type="button")
