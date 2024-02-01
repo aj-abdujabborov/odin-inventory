@@ -110,10 +110,12 @@ exports.updatePOST = [
   }),
 ];
 
-exports.deleteGET = (req, res, next) => {
-  res.send("This is the delete page!");
-};
+exports.deleteGET = asyncHandler(async (req, res, next) => {
+  const product = await Product.findById(req.params.id).exec();
+  res.render("productDelete", { product });
+});
 
-exports.deletePOST = (req, res, next) => {
-  res.send("This is the delete post!");
-};
+exports.deletePOST = asyncHandler(async (req, res, next) => {
+  await Product.findByIdAndDelete(req.params.id).exec();
+  res.redirect("/");
+});

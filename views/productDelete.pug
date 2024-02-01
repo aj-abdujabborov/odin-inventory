@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  p Are you sure you want to delete the product '#{product.name}'?
+  form(method="POST")
+    button(type="submit") Delete
+    button(type="button")
+      a(href=product.url) Cancel
