@@ -8,6 +8,12 @@ const formValidations = [
   body("name", "Name is required").trim().isLength({ min: 1 }).escape(),
 ];
 
+exports.readAllGET = asyncHandler(async (req, res, next) => {
+  const products = await Product.find({}, "name price volume").exec();
+
+  res.render("categoryDetails", { products, title: "All products" });
+});
+
 exports.readGET = asyncHandler(async (req, res, next) => {
   const [category, products] = await Promise.all([
     Category.findById(req.params.id).exec(),

@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  h1= category.name
+  h1= category ? category.name : title
   if (products.length)
     ul
       each product in products
@@ -11,6 +11,7 @@ block content
   else
     p No products in this category
   span.docControls
-    a(href=category.editUrl) Edit
-    |  | 
-    a(href=category.deleteUrl) Delete
+    if (category)
+      a(href=category.editUrl) Edit
+      |  | 
+      a(href=category.deleteUrl) Delete

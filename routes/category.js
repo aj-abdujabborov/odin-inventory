@@ -14,5 +14,6 @@ router.get("/delete/:id", categoryController.deleteGET);
 router.post("/delete/:id", categoryController.deletePOST);
 // Read
 router.get("/:id", categoryController.readGET);
+router.get("/", categoryController.readAllGET);
 
 module.exports = router;
