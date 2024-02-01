@@ -1,6 +1,7 @@
 extends layout
 
 block content
+  h1 Delete product
   p Are you sure you want to delete the category '#{category.name}'?
     if (productsCount)
       |  Doing so will remove this category from #{productsCount} products.

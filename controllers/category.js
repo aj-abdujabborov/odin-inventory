@@ -63,7 +63,7 @@ exports.deletePOST = asyncHandler(async (req, res, next) => {
 });
 
 exports.createGET = (req, res, next) => {
-  res.render("categoryForm", {});
+  res.render("categoryForm", { title: "Create category" });
 };
 
 exports.createPOST = [
@@ -75,7 +75,11 @@ exports.createPOST = [
     const categObj = { name: data.name };
 
     if (!errors.isEmpty()) {
-      res.render("categoryForm", { ...categObj, errors: errors.array() });
+      res.render("categoryForm", {
+        ...categObj,
+        errors: errors.array(),
+        title: "Create category",
+      });
       return;
     }
 
@@ -90,7 +94,7 @@ exports.updateGET = asyncHandler(async (req, res, next) => {
   if (!category) {
     throw new Error("Category doesn't exist");
   }
-  res.render("categoryForm", category);
+  res.render("categoryForm", { ...category, title: "Edit category" });
 });
 
 exports.updatePOST = [
@@ -102,7 +106,11 @@ exports.updatePOST = [
     const categObj = { name: data.name };
 
     if (!errors.isEmpty()) {
-      res.render("categoryForm", { ...categObj, errors: errors.array() });
+      res.render("categoryForm", {
+        ...categObj,
+        errors: errors.array(),
+        title: "Edit category",
+      });
       return;
     }
 

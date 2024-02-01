@@ -45,7 +45,7 @@ exports.readGET = asyncHandler(async (req, res, next) => {
 exports.createGET = asyncHandler(async (req, res, next) => {
   const categories = await Category.find().exec();
 
-  res.render("productForm", { categories });
+  res.render("productForm", { categories, title: "Create product" });
 });
 
 exports.createPOST = [
@@ -63,6 +63,7 @@ exports.createPOST = [
         product: doc,
         categories: checkedCategories,
         errors: errors.array(),
+        title: "Create product",
       });
       return;
     }
@@ -80,7 +81,11 @@ exports.updateGET = asyncHandler(async (req, res, next) => {
 
   const checkedCategories = markAsChecked(categories, product.categories);
 
-  res.render("productForm", { product, categories: checkedCategories });
+  res.render("productForm", {
+    product,
+    categories: checkedCategories,
+    title: "Edit product",
+  });
 });
 
 exports.updatePOST = [
@@ -101,6 +106,7 @@ exports.updatePOST = [
         product: doc,
         categories: checkedCategories,
         errors: errors.array(),
+        title: "Edit product",
       });
       return;
     }
