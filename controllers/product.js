@@ -8,6 +8,25 @@ const {
 const Product = require("../models/product");
 const Category = require("../models/category");
 
+function getProductObjectFromData(data) {
+  return {
+    name: data.name,
+    description: data.description,
+    ingredients: data.ingredients,
+    price: +data.price,
+    volume: data.volume,
+    amountInStock: +data.amountInStock,
+    categories: data.category,
+  };
+}
+
+function markAsChecked(set, selected) {
+  return set.map((obj) => {
+    if (selected.includes(obj._id)) obj.checked = true;
+    return obj;
+  });
+}
+
 exports.readGET = asyncHandler(async (req, res, next) => {
   const product = await Product.findById(req.params.id)
     .populate("categories")
@@ -36,24 +55,13 @@ exports.createPOST = [
     const data = matchedData(req);
     const categories = await Category.find().exec();
 
-    const doc = new Product({
-      name: data.name,
-      description: data.description,
-      ingredients: data.ingredients,
-      price: +data.price,
-      volume: data.volume,
-      amountInStock: +data.amountInStock,
-      categories: data.category,
-    });
-
-    categories.forEach((cat) => {
-      if (doc.categories.includes(cat._id)) cat.checked = true;
-    });
+    const doc = new Product(getProductObjectFromData(data));
+    const checkedCategories = markAsChecked(categories, doc.categories);
 
     if (!errors.isEmpty()) {
       res.render("productForm", {
         product: doc,
-        categories,
+        categories: checkedCategories,
         errors: errors.array(),
       });
       return;
@@ -70,16 +78,37 @@ exports.updateGET = asyncHandler(async (req, res, next) => {
     Category.find().exec(),
   ]);
 
-  categories.forEach((cat) => {
-    if (product.categories.includes(cat._id)) cat.checked = true;
-  });
+  const checkedCategories = markAsChecked(categories, product.categories);
 
-  res.render("productForm", { product, categories });
+  res.render("productForm", { product, categories: checkedCategories });
 });
 
-exports.updatePOST = (req, res, next) => {
-  res.send("This is the update post!");
-};
+exports.updatePOST = [
+  ...validationsArray,
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+    const data = matchedData(req);
+    const [product, categories] = await Promise.all([
+      Product.findById(req.params.id),
+      Category.find().exec(),
+    ]);
+
+    const doc = Object.assign(product, getProductObjectFromData(data));
+    const checkedCategories = markAsChecked(categories, doc.categories);
+
+    if (!errors.isEmpty()) {
+      res.render("productForm", {
+        product: doc,
+        categories: checkedCategories,
+        errors: errors.array(),
+      });
+      return;
+    }
+
+    await doc.save();
+    res.redirect(doc.url);
+  }),
+];
 
 exports.deleteGET = (req, res, next) => {
   res.send("This is the delete page!");

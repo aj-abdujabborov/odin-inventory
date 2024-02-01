@@ -2,9 +2,8 @@ const { ExpressValidator } = require("express-validator");
 
 const { body, validationResult, matchedData } = new ExpressValidator({
   forceIntoArray: (value) => {
-    if (!Array.isArray(value)) {
-      return value ? [value] : [];
-    }
+    if (Array.isArray(value)) return value;
+    return value ? [value] : [];
   },
 });
 
