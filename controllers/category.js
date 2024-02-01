@@ -2,7 +2,7 @@ const asyncHandler = require("express-async-handler");
 const Category = require("../models/category");
 const Product = require("../models/product");
 const { body, validationResult, matchedData } = require("express-validator");
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 
 const formValidations = [
   body("name", "Name is required").trim().isLength({ min: 1 }).escape(),

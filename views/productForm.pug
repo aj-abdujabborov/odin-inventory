@@ -1,0 +1,41 @@
+extends layout
+
+block content
+  h1 Create product
+  form(method="POST")
+    ul
+      li
+        label(for="name") Name
+        input#name(type="text", name="name", placeholder="Spice blend" value=product && product.name ? product.name : "")
+      li
+        label(for="description") Description
+        textarea#description(type="text" min=3 name="description", rows="3", placeholder="A delicious blend of high-quality dried spices")= product && product.description ? product.description : ""
+      li 
+        - const ingredientsText = (product && product.ingredients) ? product.ingredients.join(', ') : "";
+        label(for="ingredients") Ingredients
+        textarea#ingredients(type="text" name="ingredients", rows="3", placeholder="rosemary, thyme, paprika")= ingredientsText || ""
+      li
+        label(for="price") Price
+        input#price(type="number", name="price" placeholder="9.99" step=0.01 value=(product && product.price) ? product.price : "")
+      li
+        label(for="volume") Volume
+        input#volume(type="text" name="volume" placeholder="300g" value=(product && product.volume) ? product.volume : undefined)
+      li
+        label(for="amountInStock") Qt in stock
+        input#amountInStock(type="number", name="amountInStock" placeholder="14" value=(product && product.amountInStock) ? product.amountInStock : undefined)
+      li
+        label Categories
+        ul.checklist
+          each category in categories
+            li
+              if category.checked
+                input(type="checkbox", name="category" id=category.name value=category._id checked)
+              else
+                input(type="checkbox", name="category" id=category.name value=category._id)
+              label(for=category.name)= category.name
+    button(type="submit") Submit
+  div.errors
+    if (errors && errors.length)
+      ul
+        each error in errors
+          li= error.msg
