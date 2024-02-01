@@ -9,7 +9,10 @@ const formValidations = [
 ];
 
 exports.readAllGET = asyncHandler(async (req, res, next) => {
-  const products = await Product.find({}, "name price volume").exec();
+  const products = await Product.find(
+    {},
+    "name price volume amountInStock"
+  ).exec();
 
   res.render("categoryDetails", { products, title: "All products" });
 });
@@ -17,7 +20,10 @@ exports.readAllGET = asyncHandler(async (req, res, next) => {
 exports.readGET = asyncHandler(async (req, res, next) => {
   const [category, products] = await Promise.all([
     Category.findById(req.params.id).exec(),
-    Product.find({ categories: req.params.id }, "name price volume").exec(),
+    Product.find(
+      { categories: req.params.id },
+      "name price volume amountInStock"
+    ).exec(),
   ]);
 
   res.render("categoryDetails", { category, products });

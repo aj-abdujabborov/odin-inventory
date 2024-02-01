@@ -3,11 +3,19 @@ extends layout
 block content
   h1= category ? category.name : title
   if (products.length)
-    ul
+    ul.productsContainer
       each product in products
         li
-          h2= product.name
-          span #{product.price} / #{product.volume}
+          a.productLink(href=product.url)
+            h3= product.name
+            span.productInfo #{product.price} USD
+              if product.volume
+                |  / #{product.volume}
+            span.productInfo
+              if (product.amountInStock)
+                | #{product.amountInStock} in stock
+              else 
+                | Out of stock
   else
     p No products in this category
   span.docControls

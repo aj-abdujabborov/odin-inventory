@@ -111,6 +111,37 @@ form textarea {
   gap: 1ch;
 }
 
+/* Product cards */
+.productsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-auto-rows: min-content;
+  gap: 1rem;
+
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.productLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+
+  background-color: rgb(130, 100, 100);
+  padding: 10px;
+  height: 200px;
+}
+
+.productLink:hover {
+  background: red;
+}
+
+.productInfo {
+  display: block;
+  margin: 0.5rem 0;
+}
+
 /* Errors */
 .errors {
   margin: 1rem 0;
